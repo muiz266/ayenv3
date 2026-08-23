@@ -1,0 +1,25 @@
+{
+  "name": "AYEN KETAM NIPAH",
+  "short_name": "AKN Ketam",
+  "description": "Tempahan ketam nipah — status real-time & notifikasi",
+  "start_url": "/?source=pwa",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0f172a",
+  "theme_color": "#00B14F",
+  "lang": "ms-MY",
+  "categories": [
+    "food",
+    "shopping"
+  ],
+  "icons": [
+    {
+      "src": "/rider-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "gcm_sender_id": "103953800507"
+}
