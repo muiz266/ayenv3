@@ -2,14 +2,9 @@
 <html lang="ms">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#00B14F">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="mobile-web-app-capable" content="yes">
-    <link rel="apple-touch-icon" href="/rider-icon.svg">
-    <link rel="manifest" href="/manifest.json">
-    <title>Sistem Eksekutif & Slot Pintar | AYEN KETAM NIPAH</title>
+    <title>Sistem Eksekutif & Slot Pintar | Ayen Express</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -18,21 +13,41 @@
             --grab-green: #00B14F;
             --grab-green-dark: #008038;
             --grab-green-light: #e6f9ef;
+            --whatsapp-green: #25D366;
             --white: #ffffff;
             --bg: #f8fafc;
             --bg-alt: #f1f5f9;
             --card: #ffffff;
             --border: #e2e8f0;
+            --border-light: #f1f5f9;
             --text-dark: #0f172a;
             --text-body: #334155;
             --text-secondary: #64748b;
             --text-muted: #94a3b8;
             --danger: #ef4444;
+            --warning: #f59e0b;
+            --info: #3b82f6;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.06);
+            --shadow-glow: 0 6px 20px rgba(0, 177, 79, 0.25);
             --radius-sm: 8px;
             --radius-md: 12px;
             --radius-lg: 16px;
             --radius-pill: 50px;
             --font: 'Nunito', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        body.dark-mode {
+            --bg: #121820;
+            --bg-alt: #1a222d;
+            --card: #18202b;
+            --border: #273444;
+            --border-light: #1f2937;
+            --text-dark: #f1f5f9;
+            --text-body: #cbd5e1;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --grab-green-light: #132e22;
         }
 
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -44,8 +59,30 @@
             line-height: 1.6; 
             min-height: 100vh; 
             padding-bottom: 140px; 
+            position: relative;
+            -webkit-font-smoothing: antialiased;
+            transition: background 0.3s ease, color 0.3s ease;
         }
 
+        .btn-clicked-effect {
+            animation: btnPulseWave 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+        }
+        @keyframes btnPulseWave {
+            0% { transform: scale(1); }
+            50% { transform: scale(0.88); filter: brightness(1.2); }
+            100% { transform: scale(1); filter: brightness(1); }
+        }
+
+        .cart-pulse-animation {
+            animation: cartBounceEffect 0.4s ease-in-out !important;
+        }
+        @keyframes cartBounceEffect {
+            0% { transform: scale(1); }
+            30% { transform: scale(1.2) rotate(5deg); background-color: var(--grab-green); color: white; }
+            60% { transform: scale(0.9) rotate(-5deg); }
+            100% { transform: scale(1); }
+        }
+        
         .status-bar { 
             position: sticky; 
             top: 0; 
@@ -60,460 +97,295 @@
         .status-left { display: flex; align-items: center; gap: 10px; }
         .status-indicator { width: 9px; height: 9px; border-radius: 50%; background: #ffffff; animation: statusPulse 2s ease-in-out infinite; }
         @keyframes statusPulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.6; transform: scale(0.85); } }
-        .status-text { color: #ffffff; font-size: 13px; font-weight: 800; }
+        .status-text { color: #ffffff; font-size: 13px; font-weight: 800; letter-spacing: 0.5px; }
+
+        .status-right-group { display: flex; align-items: center; gap: 8px; }
+        
+        .sidebar-toggle-btn, .dark-mode-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            color: white;
+            padding: 6px 12px;
+            border-radius: var(--radius-pill);
+            font-size: 11px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .sidebar-toggle-btn:hover, .dark-mode-btn:hover { background: rgba(255, 255, 255, 0.35); transform: translateY(-1px); }
+        .sidebar-toggle-btn svg, .dark-mode-btn svg { width: 13px; height: 13px; fill: white; }
+
+        .earnings-header { background: var(--white); padding: 22px 20px; border-bottom: 1px solid var(--border); transition: background 0.3s ease, border-color 0.3s ease; }
+        .earnings-top { display: flex; justify-content: space-between; align-items: center; }
+        .earnings-greeting { font-size: 12px; color: var(--text-muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+        .earnings-title { font-size: 20px; font-weight: 900; color: var(--text-dark); margin-top: 2px; }
+        .earnings-avatar { width: 44px; height: 44px; border-radius: 50%; background: var(--grab-green-light); display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 900; color: var(--grab-green); border: 2px solid var(--grab-green); }
+        
+        .main-content { max-width: 520px; margin: 0 auto; padding: 16px; position: relative; z-index: 1; }
+        
+        .flash-sale-banner { 
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); 
+            border: 1px solid #fcd34d; 
+            border-radius: var(--radius-md); 
+            padding: 12px 16px; 
+            margin-bottom: 14px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            font-size: 12px; 
+            font-weight: 800; 
+            color: #92400e; 
+            box-shadow: var(--shadow-sm);
+        }
+        body.dark-mode .flash-sale-banner {
+            background: linear-gradient(135deg, #2d2613 100%, #3d3215 0%);
+            border-color: #854d0e;
+            color: #fde047;
+        }
+        .countdown-timer { background: #92400e; color: #fff; padding: 4px 10px; border-radius: var(--radius-sm); font-size: 11px; font-weight: 900; letter-spacing: 0.5px; }
+        body.dark-mode .countdown-timer { background: #ca8a04; color: #1a222d; }
+
+        .promo-banner { 
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%); 
+            border: 1px solid #bbf7d0; 
+            border-radius: var(--radius-md); 
+            padding: 14px 16px; 
+            margin-bottom: 16px; 
+            display: flex; 
+            align-items: flex-start; 
+            gap: 12px; 
+            box-shadow: var(--shadow-sm);
+        }
+        body.dark-mode .promo-banner {
+            background: linear-gradient(135deg, #132e22 0%, #163828 100%);
+            border-color: #166534;
+        }
+        .promo-banner svg { width: 22px; height: 22px; fill: var(--grab-green); flex-shrink: 0; margin-top: 1px; }
+        .promo-text { font-size: 12px; font-weight: 700; color: #166534; line-height: 1.5; }
+        body.dark-mode .promo-text { color: #86efac; }
+
+        .progress-steps { display: flex; justify-content: space-between; margin-bottom: 16px; background: var(--card); padding: 14px 16px; border-radius: var(--radius-md); border: 1px solid var(--border); box-shadow: var(--shadow-sm); transition: background 0.3s ease, border-color 0.3s ease; }
+        .step-item { display: flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 800; color: var(--text-muted); transition: 0.2s; }
+        .step-item.active { color: var(--grab-green); }
+        .step-num { width: 22px; height: 22px; border-radius: 50%; background: var(--border); color: var(--text-secondary); display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 900; }
+        .step-item.active .step-num { background: var(--grab-green); color: white; }
+
+        .card { background: var(--card); border-radius: var(--radius-lg); box-shadow: var(--shadow-md); padding: 20px; margin-bottom: 16px; border: 1px solid var(--border); transition: background 0.3s ease, border-color 0.3s ease; }
+        .section-title { font-size: 12px; font-weight: 800; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center; }
+
+        .product-grid { display: grid; grid-template-columns: 1fr; gap: 12px; margin-bottom: 16px; }
+        .product-option { display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; background: var(--bg-alt); border: 2px solid var(--border); border-radius: var(--radius-md); transition: all 0.2s ease; gap: 12px; }
+        .product-option:hover { border-color: var(--grab-green); background: var(--card); box-shadow: var(--shadow-sm); }
+        .product-info h4 { font-size: 14px; font-weight: 800; color: var(--text-dark); }
+        .product-info p { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+        .product-price { font-size: 15px; font-weight: 900; color: var(--grab-green); white-space: nowrap; }
+        
+        .qty-controls { display: flex; align-items: center; gap: 8px; }
+        .qty-btn { width: 32px; height: 32px; border-radius: 50%; border: 2px solid var(--grab-green); background: var(--card); color: var(--grab-green); font-size: 14px; font-weight: 900; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+        .qty-btn:hover { background: var(--grab-green); color: var(--white); transform: scale(1.05); box-shadow: 0 2px 6px rgba(0,177,79,0.3); }
+        .qty-display { font-size: 14px; font-weight: 900; min-width: 20px; text-align: center; color: var(--text-dark); }
 
         .form-group { margin-bottom: 16px; }
         .form-label { display: block; font-size: 12px; font-weight: 800; color: var(--text-secondary); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
         .form-label .required-star { color: var(--danger); margin-left: 2px; }
-        .form-input { width: 100%; padding: 12px 16px; background: var(--bg-alt); border: 2px solid var(--border); border-radius: var(--radius-md); font-family: var(--font); font-size: 14px; font-weight: 500; }
-        .form-input::placeholder { color: var(--text-muted); }
+        .form-input { width: 100%; padding: 12px 16px; background: var(--bg-alt); border: 2px solid var(--border); border-radius: var(--radius-md); font-family: var(--font); font-size: 14px; font-weight: 700; color: var(--text-dark); transition: all 0.2s; }
+        .form-input::placeholder { color: var(--text-muted); opacity: 0.8; }
         .form-input:focus { outline: none; border-color: var(--grab-green); background: var(--card); box-shadow: 0 0 0 3px rgba(0,177,79,0.1); }
+        
+        .slot-grid { display: grid; grid-template-columns: 1fr; gap: 8px; margin-bottom: 16px; }
+        .slot-option { display: flex; align-items: center; justify-content: space-between; padding: 12px 14px; background: var(--bg-alt); border: 2px solid var(--border); border-radius: var(--radius-sm); cursor: pointer; font-size: 13px; font-weight: 700; transition: all 0.2s; color: var(--text-body); }
+        .slot-option input[type="radio"] { accent-color: var(--grab-green); }
+        .slot-option.selected { border-color: var(--grab-green); background: var(--grab-green-light); color: var(--grab-green); box-shadow: var(--shadow-sm); }
+        .slot-option.full { opacity: 0.5; background: #fee2e2; border-color: #fca5a5; cursor: not-allowed; }
+        body.dark-mode .slot-option.full { background: #3f1d1d; border-color: #7f1d1d; color: #fca5a5; }
 
-        .location-status-box {
-            background: var(--bg-alt);
-            border: 2px solid var(--border);
-            border-radius: var(--radius-md);
-            padding: 12px 14px;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            font-size: 12px;
-            font-weight: 700;
-        }
-        .location-status-box.active {
-            border-color: var(--grab-green);
+        .payment-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 16px; }
+        .payment-option { display: flex; align-items: center; gap: 8px; padding: 12px 14px; background: var(--bg-alt); border: 2px solid var(--border); border-radius: var(--radius-sm); cursor: pointer; font-size: 12px; font-weight: 800; transition: all 0.2s; color: var(--text-dark); }
+        .payment-option input[type="radio"] { accent-color: var(--grab-green); }
+        .payment-option.selected { border-color: var(--grab-green); background: var(--grab-green-light); color: var(--grab-green); box-shadow: var(--shadow-sm); }
+
+        .qr-instruction-box { background: var(--bg-alt); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 16px; margin-bottom: 16px; text-align: center; }
+        .qr-title { font-size: 13px; font-weight: 800; color: var(--text-dark); margin-bottom: 4px; }
+        .qr-sub { font-size: 12px; color: var(--text-secondary); margin-bottom: 12px; line-height: 1.4; }
+        .account-copy-box { display: inline-flex; align-items: center; justify-content: center; gap: 8px; margin-top: 8px; background: #e0f2fe; padding: 8px 16px; border-radius: var(--radius-pill); font-size: 12px; font-weight: 800; color: #0369a1; cursor: pointer; border: 1px solid #bae6fd; width: 100%; transition: 0.2s; }
+        body.dark-mode .account-copy-box { background: #082f49; color: #38bdf8; border-color: #0369a1; }
+        .account-copy-box:hover { opacity: 0.9; }
+
+        .checkout-bar { position: fixed; bottom: 0; left: 0; right: 0; background: var(--card); padding: 16px 20px; box-shadow: 0 -4px 20px rgba(0,0,0,0.1); display: flex; align-items: center; justify-content: space-between; z-index: 500; border-top: 1px solid var(--border); transition: background 0.3s ease, border-color 0.3s ease; }
+        
+        .checkout-left-group { display: flex; align-items: center; gap: 14px; }
+        
+        .checkout-info div span { font-size: 10px; color: var(--text-muted); font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; display: block; }
+        .checkout-info div h3 { font-size: 17px; font-weight: 900; color: var(--text-dark); margin-top: 1px; }
+
+        .cart-bar-btn {
             background: var(--grab-green-light);
+            border: 2px solid var(--grab-green);
             color: var(--grab-green);
-        }
-        .location-status-box.error {
-            border-color: var(--danger);
-            background: #fee2e2;
-            color: var(--danger);
-        }
-
-        .btn-get-location {
-            width: 100%;
-            background: var(--grab-green);
-            color: white;
-            border: none;
-            padding: 12px;
-            border-radius: var(--radius-md);
-            font-family: var(--font);
-            font-size: 14px;
-            font-weight: 800;
-            cursor: pointer;
-            transition: all 0.2s;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
-            margin-bottom: 16px;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.2s;
+            flex-shrink: 0;
         }
-        .btn-get-location:hover { opacity: 0.95; transform: translateY(-1px); }
-        .btn-get-location:disabled { opacity: 0.6; cursor: not-allowed; }
-
-        .card { background: var(--card); border-radius: var(--radius-lg); box-shadow: 0 4px 12px rgba(0,0,0,0.06); padding: 20px; margin-bottom: 16px; border: 1px solid var(--border); }
-
-        .product-grid { display: grid; grid-template-columns: 1fr; gap: 12px; margin-bottom: 16px; }
-        .product-option { display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; background: var(--bg-alt); border: 2px solid var(--border); border-radius: var(--radius-md); cursor: pointer; transition: all 0.2s; }
-        .product-option:hover { border-color: var(--grab-green); background: var(--card); }
-        .product-option input[type="checkbox"] { accent-color: var(--grab-green); }
-        .product-info h4 { font-size: 14px; font-weight: 800; color: var(--text-dark); }
-        .product-info p { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
-        .product-price { font-size: 15px; font-weight: 900; color: var(--grab-green); }
-
-        .qty-controls { display: flex; align-items: center; gap: 8px; }
-        .qty-btn { width: 32px; height: 32px; border-radius: 50%; border: 2px solid var(--grab-green); background: var(--card); color: var(--grab-green); font-size: 14px; font-weight: 900; cursor: pointer; transition: all 0.2s; }
-        .qty-btn:hover { background: var(--grab-green); color: var(--white); }
-        .qty-display { font-size: 14px; font-weight: 900; min-width: 20px; text-align: center; }
-
-        .slot-grid { display: grid; grid-template-columns: 1fr; gap: 8px; margin-bottom: 16px; }
-        .slot-option { display: flex; align-items: center; gap: 12px; padding: 12px 14px; background: var(--bg-alt); border: 2px solid var(--border); border-radius: var(--radius-sm); cursor: pointer; transition: all 0.2s; }
-        .slot-option input[type="radio"] { accent-color: var(--grab-green); }
-        .slot-option.selected { border-color: var(--grab-green); background: var(--grab-green-light); }
-        .slot-option.full { opacity: 0.5; background: #fee2e2; cursor: not-allowed; }
-
-        .checkout-bar { position: fixed; bottom: 0; left: 0; right: 0; background: var(--card); padding: 16px 20px; box-shadow: 0 -4px 20px rgba(0,0,0,0.1); display: flex; align-items: center; justify-content: space-between; }
-        .checkout-btn { background: var(--grab-green); color: white; border: none; padding: 13px 24px; border-radius: var(--radius-md); font-family: var(--font); font-size: 14px; font-weight: 800; cursor: pointer; transition: all 0.2s; margin-left: 16px; }
-        .checkout-btn:hover { opacity: 0.95; }
-        .checkout-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-
-        .toast-container { position: fixed; top: 75px; left: 50%; transform: translateX(-50%); background: #1e293b; color: white; padding: 10px 18px; border-radius: var(--radius-pill); font-size: 13px; font-weight: 700; opacity: 0; visibility: hidden; transition: opacity 0.3s, visibility 0.3s; z-index: 1000; }
-        .toast-container.show { opacity: 1; visibility: visible; }
-
-        .main-content { max-width: 520px; margin: 0 auto; padding: 16px; }
-    </style>
-</head>
-<body>
-
-    <div class="toast-container" id="toastNotification">
-        <span id="toastText">Berjaya dikemas kini</span>
-    </div>
-
-    <div class="status-bar">
-        <div class="status-left">
-            <div class="status-indicator"></div>
-            <span class="status-text">AYEN KETAM NIPAH - Pre-Order Sistem Pintar</span>
-        </div>
-    </div>
-
-    <div class="main-content">
-        <!-- Lokasi Pelanggan (WAJIB) -->
-        <div class="card">
-            <div class="form-group">
-                <label class="form-label">📍 Lokasi Anda <span class="required-star">*</span></label>
-                <div class="location-status-box" id="locationStatus">
-                    <span>📍 Tiada lokasi</span>
-                </div>
-                <button type="button" class="btn-get-location" id="btnGetLocation" onclick="getCustomerLocation()">
-                    📍 Guna Lokasi Semasa
-                </button>
-                <input type="hidden" id="customerLat" value="">
-                <input type="hidden" id="customerLng" value="">
-            </div>
-        </div>
-
-        <!-- Pilihan Produk -->
-        <div class="card">
-            <h3 style="font-size: 14px; font-weight: 900; margin-bottom: 12px; color: var(--text-dark);">Pilih Produk</h3>
-            <div class="product-grid" id="productGrid"></div>
-        </div>
-
-        <!-- Pilih Tarikh & Slot -->
-        <div class="card">
-            <div class="form-group">
-                <label class="form-label">📅 Tarikh Penghantaran <span class="required-star">*</span></label>
-                <select class="form-input" id="deliveryDate" onchange="loadSlots()">
-                    <option value="">Pilih Tarikh...</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label class="form-label">🕐 Masa Slot <span class="required-star">*</span></label>
-                <div class="slot-grid" id="slotGrid"></div>
-            </div>
-        </div>
-
-        <!-- Maklumat Pelanggan -->
-        <div class="card">
-            <div class="form-group">
-                <label class="form-label">Nama <span class="required-star">*</span></label>
-                <input type="text" class="form-input" id="customerName" placeholder="Masukkan nama anda">
-            </div>
-
-            <div class="form-group">
-                <label class="form-label">Nombor Telefon <span class="required-star">*</span></label>
-                <input type="tel" class="form-input" id="customerPhone" placeholder="Cth: 0128765432">
-            </div>
-
-            <div class="form-group">
-                <label class="form-label">Alamat Lengkap <span class="required-star">*</span></label>
-                <textarea class="form-input" id="customerAddress" placeholder="Jalan, No Rumah, Bandar, Negeri" style="min-height: 80px; resize: vertical;"></textarea>
-            </div>
-        </div>
-
-        <!-- Maklumat Bayaran -->
-        <div class="card">
-            <div class="form-group">
-                <label class="form-label">Kaedah Bayaran <span class="required-star">*</span></label>
-                <div style="display: flex; gap: 12px;">
-                    <label style="flex: 1; cursor: pointer;">
-                        <input type="radio" name="paymentMethod" value="qr" checked> <span style="margin-left: 6px;">QR / DuitNow</span>
-                    </label>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="form-label">Resit Bayaran <span class="required-star">*</span></label>
-                <input type="file" class="form-input" id="receiptFile" accept="image/jpeg,image/png,image/webp">
-                <small style="color: var(--text-muted); margin-top: 6px; display: block;">Muat naik resit pembayaran (JPG/PNG/WEBP, max 5MB)</small>
-            </div>
-        </div>
-
-        <!-- T&C -->
-        <div class="card">
-            <label style="display: flex; align-items: flex-start; gap: 10px; cursor: pointer;">
-                <input type="checkbox" id="tncAccepted" style="margin-top: 2px; accent-color: var(--grab-green); width: 18px; height: 18px; cursor: pointer;">
-                <span style="font-size: 12px; color: var(--text-secondary);">Saya bersetuju dengan Terma & Syarat AYEN KETAM NIPAH</span>
-            </label>
-        </div>
-
-        <div style="height: 20px;"></div>
-    </div>
-
-    <div class="checkout-bar">
-        <div style="font-weight: 800; color: var(--text-dark);">
-            <div style="font-size: 10px; text-transform: uppercase; color: var(--text-muted);">Jumlah</div>
-            <div style="font-size: 18px; margin-top: 2px;">RM <span id="totalPrice">0.00</span></div>
-        </div>
-        <button type="button" class="checkout-btn" id="checkoutBtn" onclick="submitOrder()" disabled>
-            Hantar Pesanan
-        </button>
-    </div>
-
-    <script>
-        let products = {};
-        let currentConfig = null;
-        let selectedItems = {};
-
-        async function loadConfig() {
-            try {
-                const res = await fetch('/api/config');
-                if (!res.ok) throw new Error('API error: ' + res.status);
-                currentConfig = await res.json();
-                displayProducts();
-                populateDates();
-            } catch (e) {
-                console.error('loadConfig error:', e);
-                showToast('Gagal muat konfigurasi: ' + e.message, 'error');
-            }
+        .cart-bar-btn:hover { background: var(--grab-green); color: white; transform: scale(1.05); }
+        .cart-bar-btn svg { width: 22px; height: 22px; fill: currentColor; }
+        .cart-bar-badge {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            background: var(--danger);
+            color: white;
+            font-size: 10px;
+            font-weight: 900;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--card);
         }
-
-        function displayProducts() {
-            if (!currentConfig?.products) return;
-            const grid = document.getElementById('productGrid');
-            grid.innerHTML = '';
-            currentConfig.products.forEach(p => {
-                const div = document.createElement('div');
-                div.className = 'product-option';
-                div.innerHTML = `
-                    <div class="product-info">
-                        <h4>${p.name}</h4>
-                        <p>${p.desc}</p>
-                    </div>
-                    <div style="display: flex; align-items: center; gap: 12px;">
-                        <span class="product-price">RM ${Number(p.price).toFixed(2)}</span>
-                        <div class="qty-controls">
-                            <button type="button" class="qty-btn" onclick="updateQty(${p.id}, -1)">−</button>
-                            <span class="qty-display" id="qty-${p.id}">0</span>
-                            <button type="button" class="qty-btn" onclick="updateQty(${p.id}, 1)">+</button>
-                        </div>
-                    </div>
-                `;
-                grid.appendChild(div);
-            });
+        
+        .checkout-btn { background: linear-gradient(135deg, #00B14F 0%, #008038 100%); color: #ffffff; border: none; padding: 13px 24px; border-radius: var(--radius-md); font-family: var(--font); font-size: 14px; font-weight: 800; cursor: pointer; box-shadow: var(--shadow-glow); transition: all 0.2s; }
+        .checkout-btn:hover { opacity: 0.95; transform: translateY(-1px); box-shadow: 0 6px 16px rgba(0,177,79,0.35); }
+        
+        .clear-cart-btn {
+            background: #fee2e2;
+            color: var(--danger);
+            border: 1px solid #fca5a5;
+            padding: 10px 16px;
+            border-radius: var(--radius-sm);
+            font-family: var(--font);
+            font-size: 12px;
+            font-weight: 800;
+            cursor: pointer;
+            width: 100%;
+            text-align: center;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
         }
+        body.dark-mode .clear-cart-btn { background: #3f1d1d; border-color: #7f1d1d; color: #fca5a5; }
+        .clear-cart-btn:hover { opacity: 0.85; }
 
-        function updateQty(productId, delta) {
-            const current = Number(selectedItems[productId]?.quantity || 0);
-            const newQty = Math.max(0, current + delta);
-            
-            if (newQty === 0) {
-                delete selectedItems[productId];
-            } else {
-                const product = currentConfig.products.find(p => p.id == productId);
-                if (product) {
-                    selectedItems[productId] = { 
-                        id: product.id,
-                        name: product.name, 
-                        price: Number(product.price),
-                        quantity: newQty, 
-                        lineTotal: newQty * Number(product.price) 
-                    };
-                }
-            }
-            
-            document.getElementById(`qty-${productId}`).textContent = newQty;
-            updateTotal();
+        .wa-floating-btn {
+            position: fixed;
+            bottom: 92px;
+            right: 20px;
+            width: 46px;
+            height: 46px;
+            background: var(--whatsapp-green);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
+            z-index: 450;
+            transition: transform 0.2s;
         }
+        .wa-floating-btn:hover { transform: scale(1.1); }
+        .wa-floating-btn svg { width: 26px; height: 26px; fill: white; }
 
-        function updateTotal() {
-            let total = 0;
-            Object.values(selectedItems).forEach(item => {
-                total += item.lineTotal || 0;
-            });
-            document.getElementById('totalPrice').textContent = total.toFixed(2);
-            updateCheckoutBtn();
+        .action-btn-sm { background: var(--grab-green-light); color: var(--grab-green); border: 1px solid var(--grab-green); padding: 10px 16px; border-radius: var(--radius-sm); font-family: var(--font); font-size: 12px; font-weight: 800; cursor: pointer; display: inline-block; transition: 0.2s; text-align: center; }
+        .action-btn-sm:hover { background: var(--grab-green); color: var(--white); }
+
+        .result-msg { margin-top: 12px; font-weight: 800; text-align: center; font-size: 13px; line-height: 1.5; }
+
+        .toast-container {
+            position: fixed;
+            top: 75px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-20px);
+            background: #1e293b;
+            color: #ffffff;
+            padding: 10px 18px;
+            border-radius: var(--radius-pill);
+            font-size: 13px;
+            font-weight: 700;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            pointer-events: none;
+            white-space: nowrap;
+            border: 1px solid rgba(255,255,255,0.1);
         }
-
-        function populateDates() {
-            const select = document.getElementById('deliveryDate');
-            if (!currentConfig?.preorderDates) return;
-            select.innerHTML = '<option value="">Pilih Tarikh...</option>';
-            currentConfig.preorderDates.forEach(date => {
-                const opt = document.createElement('option');
-                opt.value = date;
-                const d = new Date(date + 'T00:00:00');
-                opt.textContent = d.toLocaleDateString('ms-MY', { weekday: 'short', day: '2-digit', month: 'short', year: 'numeric' });
-                select.appendChild(opt);
-            });
+        .toast-container.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
         }
+        .toast-icon { width: 18px; height: 18px; flex-shrink: 0; }
+        .toast-container.success .toast-icon { fill: #4ade80; }
+        .toast-container.error .toast-icon { fill: #f87171; }
 
-        async function loadSlots() {
-            const date = document.getElementById('deliveryDate').value;
-            if (!date) {
-                document.getElementById('slotGrid').innerHTML = '';
-                updateCheckoutBtn();
-                return;
-            }
-            try {
-                const res = await fetch(`/api/slots?date=${date}`);
-                if (!res.ok) throw new Error('API error: ' + res.status);
-                const data = await res.json();
-                displaySlots(data.slots);
-                updateCheckoutBtn();
-            } catch (e) {
-                console.error('loadSlots error:', e);
-                showToast('Gagal muat slot: ' + e.message, 'error');
-            }
+        .sidebar-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(3px);
+            z-index: 1500;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
-
-        function displaySlots(slotList) {
-            const grid = document.getElementById('slotGrid');
-            grid.innerHTML = '';
-            slotList.forEach(slot => {
-                const label = document.createElement('label');
-                label.className = `slot-option ${slot.full ? 'full' : ''}`;
-                const isDisabled = slot.full ? 'disabled' : '';
-                label.innerHTML = `
-                    <input type="radio" name="slot" value="${slot.id}" ${isDisabled} onchange="updateCheckoutBtn()">
-                    <span>${slot.name} (${slot.currentOrders}/${slot.maxCapacity})</span>
-                `;
-                if (slot.full) {
-                    label.style.pointerEvents = 'none';
-                }
-                grid.appendChild(label);
-            });
+        .sidebar-drawer {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 280px;
+            height: 100%;
+            background: var(--card);
+            z-index: 1600;
+            box-shadow: 5px 0 25px rgba(0,0,0,0.15);
+            transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1), background 0.3s ease;
+            display: flex;
+            flex-direction: column;
         }
-
-        async function getCustomerLocation() {
-            const btn = document.getElementById('btnGetLocation');
-            btn.disabled = true;
-            btn.textContent = '⏳ Mendapatkan lokasi...';
-
-            if (!navigator.geolocation) {
-                showToast('Geolokasi tidak disokong', 'error');
-                btn.disabled = false;
-                btn.textContent = '📍 Guna Lokasi Semasa';
-                return;
-            }
-
-            navigator.geolocation.getCurrentPosition(
-                (position) => {
-                    const lat = position.coords.latitude;
-                    const lng = position.coords.longitude;
-                    document.getElementById('customerLat').value = lat;
-                    document.getElementById('customerLng').value = lng;
-                    
-                    const statusBox = document.getElementById('locationStatus');
-                    statusBox.className = 'location-status-box active';
-                    statusBox.innerHTML = `<span>✓ Lokasi: ${lat.toFixed(4)}, ${lng.toFixed(4)}</span>`;
-                    
-                    btn.disabled = false;
-                    btn.textContent = '✓ Lokasi Diperoleh';
-                    updateCheckoutBtn();
-                    showToast('✓ Lokasi berjaya diperoleh', 'success');
-                },
-                (error) => {
-                    const statusBox = document.getElementById('locationStatus');
-                    statusBox.className = 'location-status-box error';
-                    statusBox.innerHTML = `<span>✗ Gagal: ${error.message}</span>`;
-                    btn.disabled = false;
-                    btn.textContent = '📍 Guna Lokasi Semasa';
-                    showToast('Gagal: ' + error.message, 'error');
-                }
-            );
+        .sidebar-drawer.open {
+            left: 0;
         }
-
-        async function submitOrder() {
-            // Validasi
-            const name = document.getElementById('customerName').value.trim();
-            const phone = document.getElementById('customerPhone').value.trim();
-            const address = document.getElementById('customerAddress').value.trim();
-            const lat = document.getElementById('customerLat').value;
-            const lng = document.getElementById('customerLng').value;
-            const date = document.getElementById('deliveryDate').value;
-            const slotId = document.querySelector('input[name="slot"]:checked')?.value;
-            const receiptFile = document.getElementById('receiptFile').files[0];
-            const tncAccepted = document.getElementById('tncAccepted').checked;
-
-            if (!name || name.length < 2) { showToast('Masukkan nama anda', 'error'); return; }
-            if (!phone || !/^(0|60)?1\d{7,9}$/.test(phone.replace(/\D/g, ''))) { showToast('Nombor telefon tidak sah', 'error'); return; }
-            if (!address || address.length < 5) { showToast('Alamat terlalu pendek', 'error'); return; }
-            if (!lat || !lng) { showToast('Sila dapatkan lokasi anda', 'error'); return; }
-            if (!date) { showToast('Pilih tarikh penghantaran', 'error'); return; }
-            if (!slotId) { showToast('Pilih masa slot', 'error'); return; }
-            if (!receiptFile) { showToast('Muat naik resit pembayaran', 'error'); return; }
-            if (!tncAccepted) { showToast('Bersetuju dengan T&C', 'error'); return; }
-            if (Object.keys(selectedItems).length === 0) { showToast('Pilih sekurang-kurangnya satu produk', 'error'); return; }
-
-            const btn = document.getElementById('checkoutBtn');
-            btn.disabled = true;
-            btn.textContent = '⏳ Menghantar...';
-
-            try {
-                const formData = new FormData();
-                const items = Object.values(selectedItems).map(item => ({
-                    id: item.id,
-                    name: item.name,
-                    price: item.price,
-                    quantity: item.quantity,
-                    lineTotal: item.lineTotal
-                }));
-
-                const total = items.reduce((s, i) => s + (i.lineTotal || 0), 0);
-
-                formData.append('order', JSON.stringify({
-                    customerName: name,
-                    customerPhone: phone,
-                    address: address,
-                    slotId: slotId,
-                    paymentMethod: 'qr',
-                    items: items,
-                    total: total,
-                    lat: Number(lat),
-                    lng: Number(lng),
-                    deliveryDate: date,
-                    tncAccepted: true
-                }));
-                formData.append('receipt', receiptFile);
-
-                const res = await fetch('/api/orders', {
-                    method: 'POST',
-                    body: formData
-                });
-
-                const data = await res.json();
-
-                if (!res.ok) {
-                    throw new Error(data.error || 'Gagal hantar pesanan');
-                }
-
-                showToast('✓ Pesanan berjaya: ' + data.order.orderId, 'success');
-                setTimeout(() => {
-                    window.location.href = '/?track=' + phone;
-                }, 2000);
-            } catch (e) {
-                console.error('submitOrder error:', e);
-                showToast('Gagal: ' + e.message, 'error');
-                btn.disabled = false;
-                btn.textContent = 'Hantar Pesanan';
-            }
+        .sidebar-header {
+            background: var(--grab-green);
+            padding: 20px;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
-
-        function updateCheckoutBtn() {
-            const btn = document.getElementById('checkoutBtn');
-            const hasItems = Object.keys(selectedItems).length > 0;
-            const hasLocation = document.getElementById('customerLat').value && document.getElementById('customerLng').value;
-            const hasDate = document.getElementById('deliveryDate').value;
-            const hasSlot = document.querySelector('input[name="slot"]:checked');
-            btn.disabled = !(hasItems && hasLocation && hasDate && hasSlot);
+        .sidebar-title {
+            font-size: 16px;
+            font-weight: 900;
         }
-
-        function showToast(msg, type = 'success') {
-            const toast = document.getElementById('toastNotification');
-            const text = document.getElementById('toastText');
-            text.textContent = msg;
-            toast.className = `toast-container show ${type}`;
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, 3500);
+        .sidebar-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 22px;
+            font-weight: 900;
+            cursor: pointer;
         }
-
-        // Mula muatan
-        loadConfig();
-    </script>
-
-</body>
-</html>
+        .sidebar-body {
+            padding: 16px;
+            overflow-y: auto;
+            flex: 1;
+        }
+        .sidebar-menu-item {
+            display: flex;
+            align-items: center;
+            ga
