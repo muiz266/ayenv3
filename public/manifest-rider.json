@@ -1,0 +1,20 @@
+{
+  "name": "Ayen Rider",
+  "short_name": "Ayen Rider",
+  "description": "App rider AYEN KETAM NIPAH — terima & hantar order",
+  "start_url": "/rider.html",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0a0f16",
+  "theme_color": "#00B14F",
+  "lang": "ms",
+  "icons": [
+    {
+      "src": "/rider-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
