@@ -1,0 +1,65 @@
+/* ===== ANIMATIONS & KEYFRAMES ===== */
+
+@keyframes btnPulseWave {
+    0% { transform: scale(1); }
+    50% { transform: scale(0.88); filter: brightness(1.2); }
+    100% { transform: scale(1); filter: brightness(1); }
+}
+
+@keyframes cartBounceEffect {
+    0% { transform: scale(1); }
+    30% { transform: scale(1.2) rotate(5deg); background-color: var(--grab-green); color: white; }
+    60% { transform: scale(1) rotate(-2deg); }
+    100% { transform: scale(1); }
+}
+
+@keyframes statusPulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(0.85); }
+}
+
+@keyframes aknBadgePulse {
+    0%, 100% { transform: scale(1); box-shadow: 0 2px 6px rgba(239,68,68,0.45); }
+    50% { transform: scale(1.12); box-shadow: 0 0 0 6px rgba(239,68,68,0.18); }
+}
+
+@keyframes modalPopup {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes fadeInCall {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes pulseAvatar {
+    0% { box-shadow: 0 0 0 0 rgba(0, 177, 79, 0.6); }
+    70% { box-shadow: 0 0 0 22px rgba(0, 177, 79, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(0, 177, 79, 0); }
+}
+
+@keyframes wavePulse {
+    0%, 100% { height: 8px; opacity: 0.4; }
+    50% { height: 26px; opacity: 1; }
+}
+
+@keyframes pulseRing {
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.7); }
+    70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(74, 222, 128, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(74, 222, 128, 0); }
+}
+
+/* Animation Classes */
+.btn-clicked-effect {
+    animation: btnPulseWave 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+}
+
+.cart-pulse-animation {
+    animation: cartBounceEffect 0.4s ease-in-out !important;
+}
+
+.header-notify-badge.show,
+.akn-notify-badge.show {
+    animation: aknBadgePulse 1.4s ease-in-out infinite;
+}
